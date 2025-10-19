@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "celestial-forge": {
+      "command": "node",
+      "args": [
+        "/absolute/path/to/Celestial-MCP/dist/index.js"
+      ],
+      "env": {},
+      "description": "Celestial Forge character progression manager"
+    }
+  }
+}
