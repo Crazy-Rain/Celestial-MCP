@@ -24,6 +24,13 @@ npm run build
 npm start
 ```
 
+The server will:
+- ✅ Load 5642 perks from the lorebook
+- ✅ Initialize the SQLite database
+- ✅ Start listening for MCP tool calls via stdio
+
+See the [example workflow](EXAMPLE_WORKFLOW.md) for step-by-step usage.
+
 ## Usage
 
 The server provides MCP tools for managing Celestial Forge characters:
@@ -85,6 +92,27 @@ All data stored in `forge.db` (SQLite):
 
 Backup by copying `forge.db`.
 
+## Project Structure
+
+```
+Celestial-MCP/
+├── src/
+│   ├── index.ts           # MCP server (11 tools)
+│   ├── database.ts        # SQLite schema
+│   ├── character-ops.ts   # Character CRUD
+│   ├── perk-ops.ts        # Perk management
+│   └── cp-ops.ts          # CP & event tracking
+├── dist/                  # Compiled JS (generated)
+├── config.json           # Game rules config
+├── perks.json            # 5642 perks lorebook
+├── forge.db              # SQLite database (generated)
+└── Documentation/
+    ├── README.md         # This file
+    ├── SETUP.md          # Detailed setup guide
+    ├── EXAMPLE_WORKFLOW.md  # Usage examples
+    └── IMPLEMENTATION_NOTES.md  # Design spec
+```
+
 ## Requirements
 
 - Node.js 18 or higher
@@ -93,6 +121,7 @@ Backup by copying `forge.db`.
 ## Documentation
 
 - [SETUP.md](SETUP.md) - Detailed setup and usage guide
+- [EXAMPLE_WORKFLOW.md](EXAMPLE_WORKFLOW.md) - Step-by-step examples
 - [IMPLEMENTATION_NOTES.md](IMPLEMENTATION_NOTES.md) - Original design spec
 
 ## License
