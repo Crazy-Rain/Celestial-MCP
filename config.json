@@ -1,0 +1,10 @@
+{
+  "spark_cycle_size": 10,
+  "cp_award_per_cycle": 50,
+  "tiers": [
+    {"name": "Spark Initiate", "min_cp": 0},
+    {"name": "Forge Adept", "min_cp": 500},
+    {"name": "Celestial Artisan", "min_cp": 1500},
+    {"name": "Architect of Realities", "min_cp": 3000}
+  ]
+}
