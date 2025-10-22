@@ -106,8 +106,11 @@ Celestial-MCP/
 ├── config.json           # Game rules config
 ├── perks.json            # 5642 perks lorebook
 ├── forge.db              # SQLite database (generated)
-└── Documentation/
-    ├── README.md         # This file
+├── README.md             # This file
+├── SETUP.md              # Detailed setup guide
+├── EXAMPLE_WORKFLOW.md   # Usage examples
+└── IMPLEMENTATION_NOTES.md  # Design spec
+```
     ├── SETUP.md          # Detailed setup guide
     ├── EXAMPLE_WORKFLOW.md  # Usage examples
     └── IMPLEMENTATION_NOTES.md  # Design spec

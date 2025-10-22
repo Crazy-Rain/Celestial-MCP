@@ -1,9 +1,20 @@
 import Database from 'better-sqlite3';
 import { randomUUID } from 'crypto';
 import { Character, UnlockedPerk, EventLog } from './database.js';
+import * as fs from 'fs';
+
+interface Config {
+  spark_cycle_size: number;
+  cp_award_per_cycle: number;
+  tiers: Array<{ name: string; min_cp: number }>;
+}
 
 export class CharacterOperations {
-  constructor(private db: Database.Database) {}
+  private config: Config;
+
+  constructor(private db: Database.Database, configPath: string = 'config.json') {
+    this.config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+  }
 
   createCharacter(name: string, world: string = ''): Character {
     const id = randomUUID();
@@ -117,7 +128,7 @@ export class CharacterOperations {
     }).join(', ');
 
     return `[FORGE STATE]
-CP: ${character.cp_total} (Spent ${character.cp_spent}, Available ${cpAvailable}) | Tier: ${character.tier} | Responses: ${character.response_count}/10
+CP: ${character.cp_total} (Spent ${character.cp_spent}, Available ${cpAvailable}) | Tier: ${character.tier} | Responses: ${character.response_count}/${this.config.spark_cycle_size}
 Perks (recent): ${perksList || 'None'}
 Recent: ${eventsList || 'No recent events'}`;
   }

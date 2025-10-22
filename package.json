@@ -1,7 +1,7 @@
 {
   "name": "celestial-mcp",
   "version": "1.0.0",
-  "description": "MCP for use with Sillytavern. Might or mightnot work. For use with Celestial Forge scenarios.",
+  "description": "MCP for use with SillyTavern. Might or might not work. For use with Celestial Forge scenarios.",
   "main": "dist/index.js",
   "type": "module",
   "bin": {

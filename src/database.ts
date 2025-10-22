@@ -1,5 +1,4 @@
 import Database from 'better-sqlite3';
-import * as path from 'path';
 
 export interface Character {
   id: string;
@@ -90,7 +89,8 @@ export class ForgeDatabase {
         source TEXT NOT NULL,
         cost_cp INTEGER NOT NULL DEFAULT 0,
         description TEXT NOT NULL DEFAULT '',
-        tags TEXT NOT NULL DEFAULT '[]'
+        tags TEXT NOT NULL DEFAULT '[]',
+        UNIQUE(name, source)
       );
 
       CREATE TABLE IF NOT EXISTS event_logs (

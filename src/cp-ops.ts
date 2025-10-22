@@ -2,7 +2,6 @@ import Database from 'better-sqlite3';
 import { randomUUID } from 'crypto';
 import { EventLog } from './database.js';
 import * as fs from 'fs';
-import * as path from 'path';
 
 interface Config {
   spark_cycle_size: number;
@@ -25,6 +24,7 @@ export class CPOperations {
 
     const newTotal = character.cp_total + amount;
     this.updateCharacterCP(characterId, newTotal, character.cp_spent);
+    this.updateTier(characterId);
 
     return this.logEvent(characterId, 'award', { reason }, amount);
   }
@@ -42,6 +42,7 @@ export class CPOperations {
 
     const newSpent = character.cp_spent + amount;
     this.updateCharacterCP(characterId, character.cp_total, newSpent);
+    this.updateTier(characterId);
 
     return this.logEvent(characterId, 'spend', { reason }, -amount);
   }

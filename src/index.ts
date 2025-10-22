@@ -11,11 +11,10 @@ import { CharacterOperations } from './character-ops.js';
 import { PerkOperations } from './perk-ops.js';
 import { CPOperations } from './cp-ops.js';
 import * as fs from 'fs';
-import * as path from 'path';
 
 // Initialize database and operations
 const db = new ForgeDatabase('forge.db');
-const characterOps = new CharacterOperations(db.getDatabase());
+const characterOps = new CharacterOperations(db.getDatabase(), 'config.json');
 const perkOps = new PerkOperations(db.getDatabase());
 const cpOps = new CPOperations(db.getDatabase(), 'config.json');
 
@@ -306,15 +305,29 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       }
 
       case 'forge.remove_perk': {
-        perkOps.removePerk(args.unlocked_perk_id as string);
-        return {
-          content: [
-            {
-              type: 'text',
-              text: JSON.stringify({ success: true, removed: args.unlocked_perk_id }),
-            },
-          ],
-        };
+        const removed = perkOps.removePerk(
+          args.unlocked_perk_id as string,
+          args.character_id as string
+        );
+        if (removed) {
+          return {
+            content: [
+              {
+                type: 'text',
+                text: JSON.stringify({ success: true, removed: args.unlocked_perk_id }),
+              },
+            ],
+          };
+        } else {
+          return {
+            content: [
+              {
+                type: 'text',
+                text: JSON.stringify({ success: false, error: 'Perk not found or does not belong to character' }),
+              },
+            ],
+          };
+        }
       }
 
       case 'forge.award_cp': {

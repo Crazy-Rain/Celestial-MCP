@@ -67,16 +67,22 @@ export class PerkOperations {
     return stmt.all(...params) as UnlockedPerk[];
   }
 
-  removePerk(perkId: string): void {
-    const stmt = this.db.prepare(`DELETE FROM unlocked_perks WHERE id = ?`);
-    stmt.run(perkId);
+  removePerk(perkId: string, characterId: string): boolean {
+    const stmt = this.db.prepare(`DELETE FROM unlocked_perks WHERE id = ? AND character_id = ?`);
+    const result = stmt.run(perkId, characterId);
+    return result.changes > 0;
   }
 
   // Catalog operations
   loadCatalog(perks: any[]): void {
     const stmt = this.db.prepare(`
-      INSERT OR REPLACE INTO perk_catalog (id, name, category, source, cost_cp, description, tags)
+      INSERT INTO perk_catalog (id, name, category, source, cost_cp, description, tags)
       VALUES (?, ?, ?, ?, ?, ?, ?)
+      ON CONFLICT(name, source) DO UPDATE SET
+        category = excluded.category,
+        cost_cp = excluded.cost_cp,
+        description = excluded.description,
+        tags = excluded.tags
     `);
     
     const insertMany = this.db.transaction((perks: any[]) => {
